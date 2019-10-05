@@ -35,6 +35,7 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache
+.mypy_cache
 
 # Sphinx documentation
 doc/_build/

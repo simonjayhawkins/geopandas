@@ -1,6 +1,7 @@
 name: geopandas
 channels:
   - defaults
+  - conda-forge
 dependencies:
   - python=3.7.3
   - six
@@ -12,6 +13,7 @@ dependencies:
   # testing
   - pytest
   - pytest-cov
+  - mypy==0.730
   #- codecov
   # optional
   - rtree

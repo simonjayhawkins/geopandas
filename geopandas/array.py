@@ -248,9 +248,14 @@ def _binary_geo(op, left, right):
         raise TypeError("Type not known: {0} vs {1}".format(type(left), type(right)))
 
 
-def _binary_predicate(op, left, right, *args, **kwargs):
-    # type: (str, GeometryArray, GeometryArray/BaseGeometry, args/kwargs)
-    #        -> array[bool]
+def _binary_predicate(
+    op,  # type: str
+    left,  # type: GeometryArray
+    right,  # type: GeometryArray/BaseGeometry
+    *args,
+    **kwargs
+):
+    # type: (...) -> np.ndarray[bool]
     """Binary operation on GeometryArray that returns a boolean ndarray
 
     Supports:
@@ -295,9 +300,14 @@ def _binary_predicate(op, left, right, *args, **kwargs):
         raise TypeError("Type not known: {0} vs {1}".format(type(left), type(right)))
 
 
-def _binary_op_float(op, left, right, *args, **kwargs):
-    # type: (str, GeometryArray, GeometryArray/BaseGeometry, args/kwargs)
-    #        -> array
+def _binary_op_float(
+    op,  # type: str
+    left,  # type: GeometryArray
+    right,  # type: GeometryArray/BaseGeometry
+    *args,
+    **kwargs
+):
+    # type: (...) -> np.ndarray
     """Binary operation on GeometryArray that returns a ndarray"""
     # used for distance -> check for empty as we want to return np.nan instead 0.0
     # as shapely does currently (https://github.com/Toblerity/Shapely/issues/498)
@@ -327,9 +337,14 @@ def _binary_op_float(op, left, right, *args, **kwargs):
         raise TypeError("Type not known: {0} vs {1}".format(type(left), type(right)))
 
 
-def _binary_op(op, left, right, *args, **kwargs):
-    # type: (str, GeometryArray, GeometryArray/BaseGeometry, args/kwargs)
-    #        -> array
+def _binary_op(
+    op,  # type: str
+    left,  # type: GeometryArray
+    right,  # type: GeometryArray/BaseGeometry
+    *args,
+    **kwargs
+):
+    # type: (...) -> np.ndarray
     """Binary operation on GeometryArray that returns a ndarray"""
     # pass empty to shapely (relate handles this correctly, project only
     # for linestrings and points)
@@ -366,7 +381,7 @@ def _binary_op(op, left, right, *args, **kwargs):
 
 
 def _unary_geo(op, left, *args, **kwargs):
-    # type: (str, GeometryArray) -> GeometryArray
+    # type: (str, GeometryArray, *args, **kwargs) -> GeometryArray
     """Unary operation that returns new geometries"""
     # ensure 1D output, see note above
     data = np.empty(len(left), dtype=object)
@@ -382,7 +397,7 @@ def _unary_op(op, left, null_value=False):
 
 
 def _affinity_method(op, left, *args, **kwargs):
-    # type: (str, GeometryArray, ...) -> GeometryArray
+    # type: (str, GeometryArray, *args, **kwargs) -> GeometryArray
 
     # not all shapely.affinity methods can handle empty geometries:
     # affine_transform itself works (as well as translate), but rotate, scale
