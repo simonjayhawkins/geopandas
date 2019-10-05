@@ -1,9 +1,9 @@
+from typing import TYPE_CHECKING
 from warnings import warn
 
 import numpy as np
 import pandas as pd
 from pandas import DataFrame, MultiIndex, Series
-
 from shapely.geometry import box
 from shapely.geometry.base import BaseGeometry
 from shapely.ops import cascaded_union, unary_union
@@ -22,6 +22,10 @@ except ImportError:
         pass
 
     HAS_SINDEX = False
+
+
+if TYPE_CHECKING:
+    from geopandas import GeoSeries
 
 
 def is_geometry_type(data):

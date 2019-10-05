@@ -1,11 +1,11 @@
 import numbers
 import operator
+from typing import Any, Tuple
 import warnings
 
 import numpy as np
 import pandas as pd
 from pandas.api.extensions import ExtensionArray, ExtensionDtype
-
 import shapely
 import shapely.affinity
 import shapely.geometry

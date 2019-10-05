@@ -79,7 +79,8 @@ def read_postgis(
             return shapely.wkb.loads(str(x), hex=True)
 
         if sys.version_info.major < 3:
-            if isinstance(geoms.iat[0], buffer):
+            # TODO: Fix flake8 error F821 undefined name 'buffer'
+            if isinstance(geoms.iat[0], buffer):  # noqa: F821
                 load_geom = load_geom_buffer
             else:
                 load_geom = load_geom_text

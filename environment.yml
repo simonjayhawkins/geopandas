@@ -27,3 +27,5 @@ dependencies:
     - geopy
     - mapclassify
     - pyproj=2.4.0
+    - black
+    - flake8
