@@ -134,7 +134,8 @@ def infer_schema(df):
     try:
         from collections import OrderedDict
     except ImportError:
-        from ordereddict import OrderedDict
+        # error: Cannot find module named 'ordereddict'
+        from ordereddict import OrderedDict  # type: ignore
 
     def convert_type(column, in_type):
         if in_type == object:

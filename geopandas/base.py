@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Union
 from warnings import warn
 
 import numpy as np
@@ -18,7 +18,9 @@ try:
     HAS_SINDEX = True
 except ImportError:
 
-    class RTreeError(Exception):
+    # https://github.com/python/mypy/issues/1153
+    # error: Name 'RTreeError' already defined (possibly by an import)
+    class RTreeError(Exception):  # type: ignore
         pass
 
     HAS_SINDEX = False
@@ -42,7 +44,7 @@ def is_geometry_type(data):
 
 
 def _delegate_binary_method(op, this, other, *args, **kwargs):
-    # type: (str, GeoSeries, GeoSeries) -> GeoSeries/Series
+    # type: (str, GeoSeries, GeoSeries, *Any, **Any) -> Union[GeoSeries,Series]
     this = this.geometry
     if isinstance(other, GeoPandasBase):
         this, other = this.align(other.geometry)
@@ -72,14 +74,14 @@ def _binary_geo(op, this, other):
 
 
 def _binary_op(op, this, other, *args, **kwargs):
-    # type: (str, GeoSeries, GeoSeries, args/kwargs) -> Series[bool/float]
+    # type: (str, GeoSeries, GeoSeries, *Any, **Any) -> Series[bool/float]
     """Binary operation on GeoSeries objects that returns a Series"""
     data, index = _delegate_binary_method(op, this, other, *args, **kwargs)
     return Series(data, index=index)
 
 
 def _delegate_property(op, this):
-    # type: (str, GeoSeries) -> GeoSeries/Series
+    # type: (str, GeoSeries) -> Union[GeoSeries,Series]
     a_this = GeometryArray(this.geometry.values)
     data = getattr(a_this, op)
     if isinstance(data, GeometryArray):
@@ -91,7 +93,7 @@ def _delegate_property(op, this):
 
 
 def _delegate_geo_method(op, this, *args, **kwargs):
-    # type: (str, GeoSeries) -> GeoSeries
+    # type: (str, GeoSeries, *Any, **Any) -> GeoSeries
     """Unary operation that returns a GeoSeries"""
     from .geoseries import GeoSeries
 

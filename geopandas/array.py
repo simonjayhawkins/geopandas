@@ -1,6 +1,6 @@
 import numbers
 import operator
-from typing import Any, Tuple
+from typing import Any, Tuple, Union
 import warnings
 
 import numpy as np
@@ -211,7 +211,7 @@ def points_from_xy(x, y, z=None):
 
 
 def _binary_geo(op, left, right):
-    # type: (str, GeometryArray, [GeometryArray/BaseGeometry]) -> GeometryArray
+    # type: (str, GeometryArray, Union[GeometryArray, BaseGeometry]) -> GeometryArray
     """ Apply geometry-valued operation
 
     Supports:
@@ -251,7 +251,7 @@ def _binary_geo(op, left, right):
 def _binary_predicate(
     op,  # type: str
     left,  # type: GeometryArray
-    right,  # type: GeometryArray/BaseGeometry
+    right,  # type: Union[GeometryArray,BaseGeometry]
     *args,
     **kwargs
 ):
@@ -303,7 +303,7 @@ def _binary_predicate(
 def _binary_op_float(
     op,  # type: str
     left,  # type: GeometryArray
-    right,  # type: GeometryArray/BaseGeometry
+    right,  # type: Union[GeometryArray,BaseGeometry]
     *args,
     **kwargs
 ):
@@ -340,7 +340,7 @@ def _binary_op_float(
 def _binary_op(
     op,  # type: str
     left,  # type: GeometryArray
-    right,  # type: GeometryArray/BaseGeometry
+    right,  # type: Union[GeometryArray,BaseGeometry]
     *args,
     **kwargs
 ):
@@ -348,6 +348,7 @@ def _binary_op(
     """Binary operation on GeometryArray that returns a ndarray"""
     # pass empty to shapely (relate handles this correctly, project only
     # for linestrings and points)
+    dtype: object
     if op == "project":
         null_value = np.nan
         dtype = float
@@ -381,7 +382,7 @@ def _binary_op(
 
 
 def _unary_geo(op, left, *args, **kwargs):
-    # type: (str, GeometryArray, *args, **kwargs) -> GeometryArray
+    # type: (str, GeometryArray, *Any, **Any) -> GeometryArray
     """Unary operation that returns new geometries"""
     # ensure 1D output, see note above
     data = np.empty(len(left), dtype=object)
@@ -397,7 +398,7 @@ def _unary_op(op, left, null_value=False):
 
 
 def _affinity_method(op, left, *args, **kwargs):
-    # type: (str, GeometryArray, *args, **kwargs) -> GeometryArray
+    # type: (str, GeometryArray, *Any, **Any) -> GeometryArray
 
     # not all shapely.affinity methods can handle empty geometries:
     # affine_transform itself works (as well as translate), but rotate, scale
