@@ -1,0 +1,29 @@
+name: geopandas
+channels:
+  - defaults
+dependencies:
+  - python=3.7.3
+  - six
+  - cython
+  # required
+  - pandas
+  - shapely
+  - fiona
+  # testing
+  - pytest
+  - pytest-cov
+  #- codecov
+  # optional
+  - rtree
+  - matplotlib
+  - descartes
+  #- geopy
+  - SQLalchemy
+  - psycopg2
+  - libspatialite
+  - pip
+  - pip:
+    - codecov
+    - geopy
+    - mapclassify
+    - pyproj=2.4.0
