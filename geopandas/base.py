@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Union
+from typing import TYPE_CHECKING, Union
 from warnings import warn
 
 import numpy as np
@@ -43,8 +43,9 @@ def is_geometry_type(data):
         return False
 
 
-def _delegate_binary_method(op, this, other, *args, **kwargs):
-    # type: (str, GeoSeries, GeoSeries, *Any, **Any) -> Union[GeoSeries,Series]
+def _delegate_binary_method(
+    op: str, this: GeoSeries, other: GeoSeries, *args, **kwargs
+) -> Union[GeoSeries, Series]:
     this = this.geometry
     if isinstance(other, GeoPandasBase):
         this, other = this.align(other.geometry)
@@ -64,8 +65,7 @@ def _delegate_binary_method(op, this, other, *args, **kwargs):
     return data, this.index
 
 
-def _binary_geo(op, this, other):
-    # type: (str, GeoSeries, GeoSeries) -> GeoSeries
+def _binary_geo(op: str, this: GeoSeries, other: GeoSeries) -> GeoSeries:
     """Binary operation on GeoSeries objects that returns a GeoSeries"""
     from .geoseries import GeoSeries
 
@@ -73,15 +73,15 @@ def _binary_geo(op, this, other):
     return GeoSeries(geoms.data, index=index, crs=this.crs)
 
 
-def _binary_op(op, this, other, *args, **kwargs):
-    # type: (str, GeoSeries, GeoSeries, *Any, **Any) -> Series[bool/float]
+def _binary_op(
+    op: str, this: GeoSeries, other: GeoSeries, *args, **kwargs
+) -> Series[bool / float]:
     """Binary operation on GeoSeries objects that returns a Series"""
     data, index = _delegate_binary_method(op, this, other, *args, **kwargs)
     return Series(data, index=index)
 
 
-def _delegate_property(op, this):
-    # type: (str, GeoSeries) -> Union[GeoSeries,Series]
+def _delegate_property(op: str, this: GeoSeries) -> Union[GeoSeries, Series]:
     a_this = GeometryArray(this.geometry.values)
     data = getattr(a_this, op)
     if isinstance(data, GeometryArray):
@@ -92,8 +92,7 @@ def _delegate_property(op, this):
         return Series(data, index=this.index)
 
 
-def _delegate_geo_method(op, this, *args, **kwargs):
-    # type: (str, GeoSeries, *Any, **Any) -> GeoSeries
+def _delegate_geo_method(op: str, this: GeoSeries, *args, **kwargs) -> GeoSeries:
     """Unary operation that returns a GeoSeries"""
     from .geoseries import GeoSeries
 
