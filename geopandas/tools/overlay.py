@@ -1,9 +1,9 @@
 from functools import reduce
+from typing import List
 import warnings
 
 import numpy as np
 import pandas as pd
-
 from shapely.geometry import MultiLineString
 from shapely.ops import polygonize, unary_union
 
@@ -11,7 +11,7 @@ from geopandas import GeoDataFrame, GeoSeries
 
 
 def _uniquify(columns):
-    ucols = []
+    ucols: List = []
     for col in columns:
         inc = 1
         newcol = col

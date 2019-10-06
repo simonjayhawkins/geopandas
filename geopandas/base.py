@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, List, Union
 from warnings import warn
 
 import numpy as np
@@ -751,7 +751,7 @@ class GeoPandasBase(object):
 
         """
         index = []
-        geometries = []
+        geometries: List[List] = []
         for idx, s in self.geometry.iteritems():
             if s.type.startswith("Multi") or s.type == "GeometryCollection":
                 geoms = s.geoms

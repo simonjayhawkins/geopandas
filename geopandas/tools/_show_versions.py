@@ -1,6 +1,7 @@
 import importlib
 import platform
 import sys
+from typing import Optional
 
 
 def _get_sys_info():
@@ -52,6 +53,7 @@ def _get_C_info():
         except Exception:
             proj_dir = None
 
+    geos_version: Optional[str]
     try:
         import shapely._buildcfg
 

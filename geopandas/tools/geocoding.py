@@ -1,12 +1,12 @@
 from collections import defaultdict
 import time
-
-import numpy as np
-import pandas as pd
-from six import iteritems, string_types
+from typing import Any, Dict, List, Tuple
 
 from fiona.crs import from_epsg
+import numpy as np
+import pandas as pd
 from shapely.geometry import Point
+from six import iteritems, string_types
 
 import geopandas
 
@@ -167,7 +167,8 @@ def _prepare_geocode_result(results):
 
     """
     # Prepare the data for the DataFrame as a dict of lists
-    d = defaultdict(list)
+    # TODO: Tuple[Any, Any] ensures a two tuple, narrow Any.
+    d: Dict[str, List[Tuple[Any, Any]]] = defaultdict(list)
     index = []
 
     for i, s in iteritems(results):

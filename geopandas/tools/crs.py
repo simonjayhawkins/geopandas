@@ -27,10 +27,10 @@ def explicit_crs_from_epsg(crs=None, epsg=None):
     _crs = re.search(r"\n<{}>\s*(.+?)\s*<>".format(epsg), get_epsg_file_contents())
     if _crs is None:
         raise ValueError('EPSG code "{}" not found.'.format(epsg))
-    _crs = fiona.crs.from_string(_crs.group(1))
+    result = fiona.crs.from_string(_crs.group(1))
     # preserve the epsg code for future reference
-    _crs["init"] = "epsg:{}".format(epsg)
-    return _crs
+    result["init"] = "epsg:{}".format(epsg)
+    return result
 
 
 def epsg_from_crs(crs):

@@ -1,6 +1,6 @@
 import numbers
 import operator
-from typing import Any, Tuple, Union
+from typing import Any, List, Optional, Tuple, Union
 import warnings
 
 import numpy as np
@@ -550,7 +550,8 @@ class GeometryArray(ExtensionArray):
     @property
     def interiors(self):
         has_non_poly = False
-        inner_rings = []
+        # TODO: Optional[Any] allows list to accept None, narrow Any.
+        inner_rings: List[Optional[Any]] = []
         for geom in self.data:
             interior_ring_seq = getattr(geom, "interiors", None)
             # polygon case

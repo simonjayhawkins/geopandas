@@ -336,7 +336,7 @@ def plot_series(s, cmap=None, color=None, ax=None, figsize=None, **style_kwds):
         if color is not None:
             facecolor = color
 
-        values_ = values[poly_idx] if cmap else None
+        values_ = values[poly_idx] if values is not None else None
         plot_polygon_collection(
             ax, polys, values_, facecolor=facecolor, cmap=cmap, **style_kwds
         )
@@ -344,7 +344,7 @@ def plot_series(s, cmap=None, color=None, ax=None, figsize=None, **style_kwds):
     # plot all LineStrings and MultiLineString components in same collection
     lines = s.geometry[line_idx]
     if not lines.empty:
-        values_ = values[line_idx] if cmap else None
+        values_ = values[line_idx] if values is not None else None
         plot_linestring_collection(
             ax, lines, values_, color=color, cmap=cmap, **style_kwds
         )
@@ -352,7 +352,7 @@ def plot_series(s, cmap=None, color=None, ax=None, figsize=None, **style_kwds):
     # plot all Points in the same collection
     points = s.geometry[point_idx]
     if not points.empty:
-        values_ = values[point_idx] if cmap else None
+        values_ = values[point_idx] if values is not None else None
         plot_point_collection(ax, points, values_, color=color, cmap=cmap, **style_kwds)
 
     plt.draw()
@@ -713,7 +713,9 @@ def _mapclassify_choro(values, scheme, **classification_kwds):
         try:
             from inspect import getfullargspec as getspec
         except ImportError:
-            from inspect import getargspec as getspec
+            # https://github.com/python/mypy/issues/1153
+            # error: Name 'getspec' already defined (possibly by an import)
+            from inspect import getargspec as getspec  # type: ignore
         spec = getspec(scheme_class.__init__)
         if "k" not in spec.args:
             del classification_kwds["k"]
