@@ -44,8 +44,8 @@ def is_geometry_type(data):
 
 
 def _delegate_binary_method(
-    op: str, this: GeoSeries, other: GeoSeries, *args, **kwargs
-) -> Union[GeoSeries, Series]:
+    op: str, this: "GeoSeries", other: "GeoSeries", *args, **kwargs
+) -> Union["GeoSeries", Series]:
     this = this.geometry
     if isinstance(other, GeoPandasBase):
         this, other = this.align(other.geometry)
@@ -65,7 +65,7 @@ def _delegate_binary_method(
     return data, this.index
 
 
-def _binary_geo(op: str, this: GeoSeries, other: GeoSeries) -> GeoSeries:
+def _binary_geo(op: str, this: "GeoSeries", other: "GeoSeries") -> "GeoSeries":
     """Binary operation on GeoSeries objects that returns a GeoSeries"""
     from .geoseries import GeoSeries
 
@@ -74,14 +74,14 @@ def _binary_geo(op: str, this: GeoSeries, other: GeoSeries) -> GeoSeries:
 
 
 def _binary_op(
-    op: str, this: GeoSeries, other: GeoSeries, *args, **kwargs
-) -> Series[bool / float]:
-    """Binary operation on GeoSeries objects that returns a Series"""
+    op: str, this: "GeoSeries", other: "GeoSeries", *args, **kwargs
+) -> Series:
+    """Binary operation on GeoSeries objects that returns a bool/float Series"""
     data, index = _delegate_binary_method(op, this, other, *args, **kwargs)
     return Series(data, index=index)
 
 
-def _delegate_property(op: str, this: GeoSeries) -> Union[GeoSeries, Series]:
+def _delegate_property(op: str, this: "GeoSeries") -> Union["GeoSeries", Series]:
     a_this = GeometryArray(this.geometry.values)
     data = getattr(a_this, op)
     if isinstance(data, GeometryArray):
@@ -92,7 +92,7 @@ def _delegate_property(op: str, this: GeoSeries) -> Union[GeoSeries, Series]:
         return Series(data, index=this.index)
 
 
-def _delegate_geo_method(op: str, this: GeoSeries, *args, **kwargs) -> GeoSeries:
+def _delegate_geo_method(op: str, this: "GeoSeries", *args, **kwargs) -> "GeoSeries":
     """Unary operation that returns a GeoSeries"""
     from .geoseries import GeoSeries
 

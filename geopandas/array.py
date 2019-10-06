@@ -255,7 +255,7 @@ def _binary_predicate(
     right: Union["GeometryArray", BaseGeometry],
     *args,
     **kwargs
-) -> np.ndarray[bool]:
+) -> np.ndarray:
     """Binary operation on GeometryArray that returns a boolean ndarray
 
     Supports:
