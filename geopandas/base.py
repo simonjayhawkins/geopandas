@@ -579,7 +579,7 @@ class GeoPandasBase(object):
         """
         return _binary_op("relate", self, other)
 
-    def project(self, other, normalized=False):
+    def project(self, other, normalized: bool = False):
         """
         Return the distance along each geometry nearest to *other*
 
@@ -595,7 +595,7 @@ class GeoPandasBase(object):
         """
         return _binary_op("project", self, other, normalized=normalized)
 
-    def interpolate(self, distance, normalized=False):
+    def interpolate(self, distance, normalized: bool = False):
         """
         Return a point at the specified distance along each geometry
 
@@ -652,7 +652,7 @@ class GeoPandasBase(object):
         """  # noqa (E501 link is longer than max line length)
         return _delegate_geo_method("translate", self, xoff, yoff, zoff)
 
-    def rotate(self, angle, origin="center", use_radians=False):
+    def rotate(self, angle, origin="center", use_radians: bool = False):
         """Returns a ``GeoSeries`` with rotated geometries.
 
         See http://shapely.readthedocs.io/en/latest/manual.html#shapely.affinity.rotate

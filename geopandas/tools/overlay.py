@@ -61,7 +61,7 @@ def _extract_rings(df):
     return rings
 
 
-def _overlay_old(df1, df2, how, use_sindex=True, **kwargs):
+def _overlay_old(df1, df2, how, use_sindex: bool = True, **kwargs):
     """Perform spatial overlay between two polygons.
 
     Currently only supports data GeoDataFrames with polygons.

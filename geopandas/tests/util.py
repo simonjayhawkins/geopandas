@@ -147,7 +147,7 @@ def create_spatialite(con, df):
     return con
 
 
-def create_postgis(df, srid=None, geom_col="geom"):
+def create_postgis(df, srid=None, geom_col="geom") -> bool:
     """
     Create a nybb table in the test_geopandas PostGIS database.
     Returns a boolean indicating whether the database table was successfully

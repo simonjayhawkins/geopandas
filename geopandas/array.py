@@ -39,7 +39,7 @@ if PANDAS_GE_024:
     register_extension_dtype(GeometryDtype)
 
 
-def _isna(value):
+def _isna(value) -> bool:
     """
     Check if scalar value is NA-like (None or np.nan).
 
@@ -855,7 +855,7 @@ class GeometryArray(ExtensionArray):
 
         return new_values
 
-    def astype(self, dtype, copy=True):
+    def astype(self, dtype, copy: bool = True):
         """
         Cast to a NumPy array with 'dtype'.
 
@@ -907,7 +907,7 @@ class GeometryArray(ExtensionArray):
     # -------------------------------------------------------------------------
 
     @classmethod
-    def _from_sequence(cls, scalars, dtype=None, copy=False):
+    def _from_sequence(cls, scalars, dtype=None, copy: bool = False):
         """
         Construct a new ExtensionArray from a sequence of scalars.
 
@@ -981,7 +981,7 @@ class GeometryArray(ExtensionArray):
         # Note: this is used in `ExtensionArray.argsort`.
         raise TypeError("geometries are not orderable")
 
-    def _formatter(self, boxed=False):
+    def _formatter(self, boxed: bool = False):
         """Formatting function for scalar values.
 
         This is used in the default '__repr__'. The returned formatting

@@ -2,6 +2,8 @@
 Testing functionality for geopandas objects.
 """
 
+from typing import Union
+
 import pandas as pd
 
 from geopandas import GeoDataFrame, GeoSeries
@@ -60,12 +62,12 @@ def geom_almost_equals(this, that):
 def assert_geoseries_equal(
     left,
     right,
-    check_dtype=False,
-    check_index_type=False,
-    check_series_type=True,
-    check_less_precise=False,
-    check_geom_type=False,
-    check_crs=True,
+    check_dtype: bool = False,
+    check_index_type: bool = False,
+    check_series_type: bool = True,
+    check_less_precise: bool = False,
+    check_geom_type: bool = False,
+    check_crs: bool = True,
 ):
     """
     Test util for checking that two GeoSeries are equal.
@@ -130,14 +132,14 @@ def assert_geoseries_equal(
 def assert_geodataframe_equal(
     left,
     right,
-    check_dtype=True,
-    check_index_type="equiv",
-    check_column_type="equiv",
-    check_frame_type=True,
-    check_like=False,
-    check_less_precise=False,
-    check_geom_type=False,
-    check_crs=True,
+    check_dtype: bool = True,
+    check_index_type: Union[bool, str] = "equiv",
+    check_column_type: Union[bool, str] = "equiv",
+    check_frame_type: bool = True,
+    check_like: bool = False,
+    check_less_precise: bool = False,
+    check_geom_type: bool = False,
+    check_crs: bool = True,
 ):
     """
     Check that two GeoDataFrames are equal/

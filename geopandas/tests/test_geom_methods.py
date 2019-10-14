@@ -144,7 +144,16 @@ class TestGeomMethods:
         self._binary_op_test(op, expected, a, b, fcmp, False, right_df)
 
     def _binary_op_test(
-        self, op, expected, left, right, fcmp, left_df, right_df, *args, **kwargs
+        self,
+        op,
+        expected,
+        left,
+        right,
+        fcmp,
+        left_df: bool,
+        right_df: bool,
+        *args,
+        **kwargs
     ):
         """
         This is a helper to call a function on GeoSeries and GeoDataFrame

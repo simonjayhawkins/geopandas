@@ -3,9 +3,8 @@ import json
 import numpy as np
 import pandas as pd
 from pandas import DataFrame, Series
-from six import PY3, string_types
-
 from shapely.geometry import mapping, shape
+from six import PY3, string_types
 
 from geopandas.array import GeometryArray, from_shapely
 from geopandas.base import GeoPandasBase, is_geometry_type
@@ -107,7 +106,7 @@ class GeoDataFrame(GeoPandasBase, DataFrame):
         fget=_get_geometry, fset=_set_geometry, doc="Geometry data for GeoDataFrame"
     )
 
-    def set_geometry(self, col, drop=False, inplace=False, crs=None):
+    def set_geometry(self, col, drop: bool = False, inplace: bool = False, crs=None):
         """
         Set the GeoDataFrame geometry using either an existing column or
         the specified input. By default yields a new object.
@@ -180,7 +179,7 @@ class GeoDataFrame(GeoPandasBase, DataFrame):
         if not inplace:
             return frame
 
-    def rename_geometry(self, col, inplace=False):
+    def rename_geometry(self, col, inplace: bool = False):
         """
         Renames the GeoDataFrame geometry column to
         the specified name. By default yields a new object.
@@ -301,7 +300,7 @@ class GeoDataFrame(GeoPandasBase, DataFrame):
         geom_col="geom",
         crs=None,
         index_col=None,
-        coerce_float=True,
+        coerce_float: bool = True,
         parse_dates=None,
         params=None,
     ):
@@ -355,7 +354,7 @@ class GeoDataFrame(GeoPandasBase, DataFrame):
 
         return df
 
-    def to_json(self, na="null", show_bbox=False, **kwargs):
+    def to_json(self, na="null", show_bbox: bool = False, **kwargs):
         """
         Returns a GeoJSON representation of the ``GeoDataFrame`` as a string.
 
@@ -503,7 +502,7 @@ class GeoDataFrame(GeoPandasBase, DataFrame):
 
         to_file(self, filename, driver, schema, **kwargs)
 
-    def to_crs(self, crs=None, epsg=None, inplace=False):
+    def to_crs(self, crs=None, epsg=None, inplace: bool = False):
         """Transform geometries to a new coordinate reference system.
 
         Transform all geometries in a GeoSeries to a different coordinate
@@ -607,7 +606,7 @@ class GeoDataFrame(GeoPandasBase, DataFrame):
 
     plot.__doc__ = plot_dataframe.__doc__
 
-    def dissolve(self, by=None, aggfunc="first", as_index=True):
+    def dissolve(self, by=None, aggfunc="first", as_index: bool = True):
         """
         Dissolve geometries within `groupby` into single observation.
         This is accomplished by applying the `unary_union` method
